@@ -38,7 +38,7 @@ const HeroesList = () => {
     if (isLoading || isFetching) {
         return <Spinner/>;
     } else if (isError) {
-        return <h5 className="text-center mt-5">Ошибка загрузки</h5>
+        return <h5 className="text-center mt-5">Loading error</h5>
     }
 
     const renderHeroesList = (arr) => {
@@ -47,7 +47,7 @@ const HeroesList = () => {
 				<CSSTransition 
 					classNames="hero"
 					timeout={500}>
-					<h5 className="text-center mt-5">Героев пока нет</h5>
+					<h5 className="text-center mt-5">There are no heroes yet</h5>
 				</CSSTransition>
 			)
         }

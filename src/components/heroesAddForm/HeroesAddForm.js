@@ -50,7 +50,7 @@ const HeroesAddForm = () => {
 			onSubmit={onSubmitHandler}
 			className="border p-4 shadow-lg rounded">
             <div className="mb-3">
-                <label htmlFor="name" className="form-label fs-4">Имя нового героя</label>
+                <label htmlFor="name" className="form-label fs-4">New hero's name</label>
                 <input 
                     required
 					type="text" 
@@ -59,11 +59,11 @@ const HeroesAddForm = () => {
 					value={heroName}
 					onChange={(e)=> setHeroName(e.target.value)}
                     className="form-control" 
-                    placeholder="Как меня зовут?"/>
+                    placeholder="What is my name?"/>
             </div>
 
             <div className="mb-3">
-                <label htmlFor="text" className="form-label fs-4">Описание</label>
+                <label htmlFor="text" className="form-label fs-4">Description</label>
                 <textarea
                     required
 					id="text" 
@@ -71,12 +71,12 @@ const HeroesAddForm = () => {
 					value={heroDescription}
 					onChange={(e)=>setHeroDescription(e.target.value)}
                     className="form-control" 
-                    placeholder="Что я умею?"
+                    placeholder="What can I do?"
                     style={{"height": '130px'}}/>
             </div>
 
             <div className="mb-3">
-                <label htmlFor="element" className="form-label">Выбрать элемент героя</label>
+                <label htmlFor="element" className="form-label">Select hero's element</label>
                 <select 
                     required
 					id="element" 
@@ -84,14 +84,14 @@ const HeroesAddForm = () => {
 					value={heroElement}
 					onChange={(e)=> setHeroElement(e.target.value)}
                     className="form-select">
-						<option >Я владею элементом...</option>
+						<option >I own the element...</option>
 					{options}
                 </select>
             </div>
 
             <button 
 				type="submit" 
-				className="btn btn-primary">Создать</button>
+				className="btn btn-primary">Create</button>
         </form>
     )
 }
