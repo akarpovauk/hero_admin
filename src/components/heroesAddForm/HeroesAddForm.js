@@ -1,21 +1,19 @@
 import { useState } from 'react';
-import { useHttp } from '../../hooks/http.hook';
-import {useSelector, useDispatch} from 'react-redux';
-
-import {heroCreated} from '../heroesList/heroesSlice';
+import {useSelector} from 'react-redux';
 import {selectAll} from '../heroesFilters/filtersSlice';
 import store from '../../store';
 import { v4 as uuidv4 } from 'uuid';
+import { useCreateHeroMutation } from '../../api/apiSlice';
 
 const HeroesAddForm = () => {
 	const [heroName, setHeroName] = useState('');
 	const [heroDescription, setHeroDescription] = useState('');
 	const [heroElement, setHeroElement] = useState('');
 
+	const [createHero] = useCreateHeroMutation();
+
 	const {filtersLoadingStatus} = useSelector(state => state.filters);
 	const filters = selectAll(store.getState());
-	const dispatch = useDispatch();
-	const {request} = useHttp();
 
 	const onSubmitHandler = (e) => {
 		e.preventDefault();
@@ -25,22 +23,17 @@ const HeroesAddForm = () => {
 			description: heroDescription,
 			element: heroElement
 		}
-
-		request("http://localhost:3001/heroes", "POST", JSON.stringify(newHero))
-			.then(res => console.log(res, 'submit success'))
-			.then(dispatch(heroCreated(newHero)))
-			.catch(error => console.log(error));
+		createHero(newHero).unwrap();
 		
 		setHeroName('');
 		setHeroDescription('');
 		setHeroElement('');
 	}
 
-	const renderOptions = (arr, loadingStatus) => {
-		console.log(filters);
-		if (loadingStatus === 'loading') {
+	const renderFilters = (arr, status) => {
+		if (status === "loading") {
 			return <option>loading...</option>
-		} else if (loadingStatus === 'error' || arr.length === 0) {
+		} else if (status === "error" || arr.length === 0) {
 			return <option>Loading error</option>
 		}
 		return arr.filter(item => item.name !== 'all').map(({name, label}) => {
@@ -50,7 +43,7 @@ const HeroesAddForm = () => {
 		})
 	}
 
-	const options = renderOptions(filters, filtersLoadingStatus);
+	const options = renderFilters(filters, filtersLoadingStatus);
 
     return (
         <form 
